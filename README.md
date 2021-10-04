@@ -1,3 +1,6 @@
+Mock Database for a store
+Includes an application written in Java that allows staff to add products, a web application front end for users to register and buy products.
+
 To Start Project:
 Dependencies
 - Project files
