@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Sign In</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <script src="js/external/vue.global.js"></script>
+        <script src="js/external/vuex.global.js"></script>
+        <script src="js/external/vuex-persistedstate.js"></script>
+        <script src="js/external/axios.js"></script>
+    </head>
+    <header>
+        <h1>Sign In</h1>
+    </header>
+    <body>
+        <main id="content">
+            <navigation></navigation>
+            <!--<p>Please sign in to continue:</p>-->
+            <div id='accountDetailsBox'>
+                <h2>Account Details</h2>
+                <p>{{signInMessage}}</p>
+                <form @click.prevent="signIn()">
+                    <label for="username">Username:</label></br>
+                    <input type="text" v-model="customer.username" required><br>
+                    <label for="password">Password:</label></br>
+                    <input type="password" v-model="customer.password" required><br>
+                    <button>Sign In</button>
+                </form>
+            </div>
+            <p>If you don't have an account you can <a href="http://localhost:8080/register.html"><b>create one</b></a></p>   
+        </main>
+        <script type="module" src="js/customer.js"></script>
+        <script type="module" src="js/navigation.js"></script>
+    </body>
+</html>
+

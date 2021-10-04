@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Purchase</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/external/vue.global.js"></script>
+        <script src="js/external/vuex.global.js"></script>
+        <script src="js/external/vuex-persistedstate.js"></script>
+        <script src="js/external/axios.js"></script>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <main id="content">
+            <navigation></navigation>
+            <div id="title">
+                <h1>How Many Do You Want To Buy?</h1>
+            </div>
+            <div id="purchaseInfoTable">
+                <table>
+                    <tr>
+                        <td>ID:</td>
+                        <td>{{product.productId}}</td>
+                        <td>Name:</td>
+                        <td>{{product.name}}</td>
+                        <td>Description:</td>
+                        <td>{{product.description}}</td>
+                        <td>Price:</td>
+                        <td>{{product.price}}</td>
+                        <td>Quantity Available:</td>
+                        <td>{{product.quantityInStock}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="quantityPurchasedForm">
+                <fieldset>
+                    <legend>Quantity To Purchase</legend>
+                    <label for="quantityPurchased">How Many?</label>
+                    <input id="quantityPurchased" type="quantityPurchased" v-model="quantityPurchased" placeholder="1" required>
+                    <button type="button" @click.prevent="addToCart(product, quantityPurchased)">Add To Cart</button>
+                </fieldset>
+            </div>
+            
+        </main>
+        <script type="module" src="js/navigation.js"></script>
+        <script type="module" src="js/data-store.js"></script>
+
+        <!--<script type="module" src="js/products-list.js"></script>-->
+        <script type="module" src="js/cart.js"></script>
+    </body>
+</html>

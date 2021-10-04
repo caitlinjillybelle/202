@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Create Account</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <script src="js/external/vue.global.js"></script>
+        <script src="js/external/vuex.global.js"></script>
+        <script src="js/external/vuex-persistedstate.js"></script>
+        <script src="js/external/axios.js"></script>
+    </head>
+    <header>
+        <h1>Create an Account</h1>
+    </header>
+    <body>
+        <main id="content">
+            <navigation></navigation>
+            <div id='accountDetailsBox'>
+                <h2>Account Details</h2>
+                <form @submit.prevent="registerCustomer()" input type="text" v-model="customer.username" required>
+                    <label for="username">Username:</label></br>
+                    <input type="text" v-model="customer.username" required></br></br>
+                    <label for="firstname">First Name:</label></br>
+                    <input type="text" id="firstName" name="firstName" v-model="customer.firstName" required><br></br>
+                    <label for="lastname">Last Name:</label></br>
+                    <input type="text" id="surname" name="surname" v-model="customer.surname" required><br></br>
+                    <label for="emailAddress">Email:</label></br>
+                    <input type="email" id="emailAddress" name="emailAddress" v-model="customer.emailAddress" required><br></br>
+                    <label for="shippingAddress">Address:</label></br>
+                    <input type="text" id="shippingAddress" name="shippingAddress" v-model="customer.shippingAddress" required><br></br>
+                    <label for="password">Password:</label></br>
+                    <input type="password" id="password" name="password" v-model="customer.password" required><br></br>
+                    <button type="submit">Create Account</button>                
+                </form>
+            </div>
+        </main>
+        <script type="module" src="js/customer.js"></script>
+        <script type="module" src="js/navigation.js"></script>
+    </body>
+</html>

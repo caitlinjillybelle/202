@@ -1,0 +1,84 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21 Sep 2021, 16:32:52
+    Author     : caitlindyas
+*/
+
+/*div id */
+h1, h2, h3, p {
+    text-align: center;
+    font-family: sans-serif;
+}
+header {
+    text-align: center;
+    padding-top: 70px;
+}
+/** Navigation **/
+nav {
+    font-size: 18px;
+    text-align: center;
+    height: 70px;
+    margin-top: 25px;      
+}
+nav a {
+	display: inline-block;
+	width: 140px;
+	margin: 0 10px 0 0;
+}
+footer {
+    background-color:  gainsboro;
+    font-size: 12px;
+    text-align: right;
+    height: 100px;
+    margin-top: 25px;
+}
+footer ul {
+	list-style-type: none;
+	text-align: center;
+}
+
+footer li {
+	display: inline-block;
+	width: 100;
+	margin: 0 10px 0 0;
+}
+
+
+footer li a {
+	display: block;
+        padding-top: 45px;
+}
+
+#bodyContext {
+    display: inline-box;
+    text-align: center;
+    
+}
+#content {
+    display: inline-box;
+    text-align: center;
+    
+}
+#container {
+    //display: inline-box;
+    text-align: center;
+    
+}
+form, table {
+    text-align: center;
+}
+table  {
+    display: inline-block;
+    text-align: center;
+    //padding-left: 40px;
+}
+#banner {
+    height: 100px;
+}
+#banner h2{
+    padding-top: 40px;
+}

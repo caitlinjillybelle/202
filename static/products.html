@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>View Products</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <script src="js/external/vue.global.js"></script>
+        <script src="js/external/vuex.global.js"></script>
+        <script src="js/external/vuex-persistedstate.js"></script>
+        <script src="js/external/axios.js"></script>
+    </head>
+    <header>
+    </header>
+    <body>
+        <main id="content">
+            <navigation></navigation>
+            <h1>Products</h1>
+            <div id ="categoryheaders">
+                <h2>Categories</h2>
+                <button v-for="cat in categories">{{cat}}</button>
+            </div>
+            <div>
+                <p>Filter By Category:</p>
+                <button @click.prevent="getAllProducts()">Show All</button>
+                <button v-for="cat in categories" @click.prevent="filterByCategory(cat)">{{cat}}</button>
+            </div>
+            <table class="productTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Available</th>
+                    </tr>  
+                </thead>
+                <tbody>
+                    <tr v-for="product in products">
+                        <td>{{product.productId}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.description}}</td>
+                        <td>{{ formatCurrency(product.listPrice) }}</td>
+                        <td>{{ formatNumber(product.quantityInStock, 2) }}</td>
+<!--                            Add a @click.prevent handler to the Buy button that calls the buyProduct function. 
+                        You will need to pass the product (from the v-for) as a parameter to this function 
+                        since we need to identify the product that the user selected.-->
+                        <td><button type="button" @click.prevent="buyProduct(product)">Buy</button></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </main>
+        <script type="module" src="js/navigation.js"></script>
+        <script type="module" src="js/products-list.js"></script>
+    </body>
+</html>

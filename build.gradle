@@ -1,0 +1,124 @@
+plugins {
+    id 'application'
+    id 'jacoco'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    
+    def junitVer = '5.7.2'
+    // Testing
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.11.2'
+    testImplementation group: 'org.assertj', name: 'assertj-swing-junit', version: '3.17.1'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVer
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVer
+    testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
+    
+    //NOTE: the HikariCP version has been altered to a lower version to make 
+    //netbeans, the JDK, and gradle all compatible with the Big Sur OS.
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: '4.0.0'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.5'
+    
+    //multimap
+    implementation group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
+    
+    //h2
+    implementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+    
+    // OVal
+    implementation group: 'net.sf.oval', name: 'oval', version: '3.2.0'
+    
+    // Jooby
+    def joobyVer = '2.10.0'
+    implementation group: 'io.jooby', name: 'jooby-netty', version: joobyVer
+    implementation group: 'io.jooby', name: 'jooby-gson', version: joobyVer
+    
+    def jdbiVer = '3.21.0'
+    implementation group: 'org.jdbi', name: 'jdbi3-core', version: jdbiVer
+    implementation group: 'org.jdbi', name: 'jdbi3-sqlobject', version: jdbiVer
+}
+
+test {
+    useJUnitPlatform()
+}
+
+run {
+    standardInput = System.in
+}
+
+task openProjectFolder {
+    group = "Directories"
+    description = "Open the project root in the system file manager."
+    doFirst {
+        println('Opening: ' + file(projectDir))
+        java.awt.Desktop.getDesktop().open(file(projectDir));
+    }
+}
+
+def ignored="""
+.gradle
+build
+*.zip
+*.tgz
+.DS_Store
+"""
+
+task createGitIgnore {
+    group = "Git"
+    description = "Create the project's .gitignore file."
+    doLast {
+        def file = new File(projectDir, ".gitignore")
+        if ( !file.exists() ) {
+            println('Creating .gitignore')
+            file.text = ignored
+        } else {
+            println('.gitignore already exists')
+        }
+    }
+}
+
+sourceSets {
+   'static' {
+      resources {
+         srcDirs = ['static']
+      }
+      java {
+         srcDirs = []
+      }
+   }
+}
+
+task createMissingSourceFolders {
+  group = "Directories"
+  description = "Create all of the missing source folders for this project."
+  doFirst {
+      sourceSets.each { def sourceRoot ->
+          sourceRoot.allSource.srcDirTrees.each { def sourceDir ->
+              if (!sourceDir.dir.exists()) {
+                  println "Creating ${sourceDir}"
+                  mkdir sourceDir.dir
+              }
+          }
+      }
+  }
+}
+ 
+task deleteEmptySourceFolders {
+  group = "Directories"
+  description = "Delete all empty source folders."
+  doFirst {
+      sourceSets.each { def sourceRoot ->
+          sourceRoot.allSource.srcDirTrees.each { def sourceDir ->
+              if (sourceDir.dir.exists() && sourceDir.dir.isDirectory() && sourceDir.dir.list().length == 0) {
+                  println "Removing empty ${sourceDir}"
+                  sourceDir.dir.delete()
+              }
+          }
+      }
+  }
+}
+
+mainClassName = 'Main'

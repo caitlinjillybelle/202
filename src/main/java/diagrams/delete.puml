@@ -1,0 +1,69 @@
+@startuml
+' style tweaks to make the diagram a little more readable
+skinparam {
+  Style StrictUML
+  RoundCorner 5
+  ParticipantPadding 10
+  Padding 2
+  defaultFontSize 14
+  SequenceStereotype {
+    Font {
+      Size 12
+      Style plain
+    }
+  }
+  Database {
+    ' the default border does not match the normal colors (bug?), so fix this
+    BorderColor #A80036
+  }
+}
+
+actor User as user
+participant ":Main" as main
+participant ":MainMenu" as menu << frame >>
+participant ":ProductViewer" as viewer << viewer >>
+participant "dao\n:ProductJdbiDAO" as dao <<Product DAO >>
+participant "categoryModel\n:SimpleListModel" as model
+participant "product\n:Product" as product << domain >>
+database "H2\nDatabase" as db
+
+create dao
+main -> dao : «construct»
+
+
+create menu
+main -> menu : «construct(dao)»
+
+user -> menu++ : clicks 'View Products'
+
+create viewer
+menu -> viewer++ : « construct (dao)»
+
+dialog -> dao : getProducts()
+dao++
+dao -> db++ : SELECT * FROM PRODUCT ORDER BY PRODUCT_ID
+return query result
+return products
+
+create model
+
+viewer -> model : <<construct>>
+viewer -> model++ : updateItems(products)
+model--
+
+user <-- viewer : displays products
+viewer--
+user -> viewer++ : Selects product
+user -> viewer++ : Clicks delete
+
+
+viewer -> viewer : product = productsList.getSelectedValue()
+viewer -> dao++ : dao.removeProduct(product)
+database "H2\nDatabase" as db
+dao -> db++ : "DELETE FROM PRODUCT WHERE PRODUCT_ID = :productId"
+db--
+dao--
+
+destroy dialog
+
+@enduml

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Cart</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <script src="js/external/vue.global.js"></script>
+        <script src="js/external/vuex.global.js"></script>
+        <script src="js/external/vuex-persistedstate.js"></script>
+        <script src="js/external/axios.js"></script>
+    </head>
+    <header>
+        <h1>Cart</h1>
+    </header>
+    <body>
+        <main id="content">
+            <navigation></navigation>
+            
+            <div id="cartDiv">
+                <table>
+                    <tbody>
+
+                        <tr v-for="saleItem in items">
+                            <!--<td>{{saleItem.name}}</td>-->
+                            
+                            <td>Price: </td>
+                            <td>{{saleItem.salePrice}}</td>
+                            <td>Quantity: </td>
+                            <td>{{saleItem.quantityPurchased}}</td>
+                            <td>Total: </td>
+                            <td>{{saleItem.total}}</td>
+                            <!--<td>{{ getItemTotal(saleItem) }}</td>-->
+                            <td><button type="submit" @click.prevent="checkOut()">Check Out Cart</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <script type="module" src="js/navigation.js"></script>
+        <!--<script type="module" src="js/products-list.js"></script>-->
+        <script type="module" src="js/cart.js"></script>
+    </body>
+</html>

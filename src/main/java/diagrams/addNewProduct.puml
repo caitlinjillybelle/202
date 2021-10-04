@@ -1,0 +1,70 @@
+@startuml
+' style tweaks to make the diagram a little more readable
+skinparam {
+  Style StrictUML
+  RoundCorner 5
+  ParticipantPadding 10
+  Padding 2
+  defaultFontSize 14
+  SequenceStereotype {
+    Font {
+      Size 12
+      Style plain
+    }
+  }
+  Database {
+    ' the default border does not match the normal colors (bug?), so fix this
+    BorderColor #A80036
+  }
+}
+
+actor User as user
+participant ":Main" as main
+participant ":MainMenu" as menu << frame >>
+participant ":ProductEditor" as dialog << dialog >>
+participant "dao\n:ProductJdbiDAO" as dao <<Product DAO >>
+participant "categoryModel\n:SimpleListModel" as model
+participant "product\n:Product" as product << domain >>
+database "H2\nDatabase" as db
+
+create dao
+main -> dao : «construct»
+
+
+create menu
+main -> menu : «construct(dao)»
+
+user -> menu++ : clicks 'Add New Product'
+
+create dialog
+menu -> dialog++ : « construct (dao)»
+
+dialog -> dao : getCategories()
+dao++
+dao -> db++ : select distinct category from product
+return query result
+return categories
+
+create model
+
+dialog -> model : « construct »
+
+dialog -> model++ : updateItems(categories)
+model--
+
+dialog--
+
+user -> dialog : enters product details into input components
+
+user -> dialog++ : clicks 'Save'
+
+create product
+dialog -> product : « construct  from user input »
+
+dialog -> dao++ : saveProduct(product)
+dao -> db++ : insert into product (...) values (...)
+db--
+dao--
+
+destroy dialog
+@enduml
